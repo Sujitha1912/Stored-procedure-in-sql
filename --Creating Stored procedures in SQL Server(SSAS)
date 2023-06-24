@@ -1,0 +1,23 @@
+--Creating Stored procedures in SQL Server(SSAS)
+declare @pageno int
+set @pageno=2
+
+select salary,job_id,employee_id
+from employees 
+order by employee_id 
+offset (@pageno-1)*10 rows
+fetch next 10 rows only
+go
+
+create procedure paginations (@pageno int)
+as
+Begin
+select salary,job_id,employee_id
+from employees 
+order by employee_id 
+offset (@pageno-1)*10 rows
+fetch next 10 rows only
+end;
+go
+
+EXEC dbo.paginations 4
